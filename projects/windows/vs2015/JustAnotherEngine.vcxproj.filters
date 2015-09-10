@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{f9ba62ee-e42c-4657-ab5a-0bc5d440ea2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Render">
+      <UniqueIdentifier>{14d2a19d-a1e0-4eb2-877d-b65fa50691db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{a52fcf2f-c891-4785-9db9-18b2418aa1e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Render">
+      <UniqueIdentifier>{e5e86587-67c0-4096-9a16-712a37350030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Device">
+      <UniqueIdentifier>{2cc030e3-cf76-4201-830b-521396fbb42a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Device">
+      <UniqueIdentifier>{87522574-0ac4-4f38-ae29-c024f4226659}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Core\Device\Win32Device.cpp">
+      <Filter>Source Files\Core\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Core\Application.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Core\Render\OpenGLRender.cpp">
+      <Filter>Source Files\Core\Render</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\Core\Device\Win32Device.h">
+      <Filter>Header Files\Core\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Core\Device\Device.h">
+      <Filter>Header Files\Core\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Core\Render\OpenGLRender.h">
+      <Filter>Header Files\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Core\Render\Render.h">
+      <Filter>Header Files\Core\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Core\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
