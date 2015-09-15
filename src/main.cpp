@@ -15,11 +15,12 @@ int main()
 	app->GetDevice()->SetHeight(600);
 	if (app->Init())
 	{
-		while (true)
+		while (app->IsRunning())
 		{
 			app->Update();
 			Sleep(100);
 		}
+		app->Deinit();
 	}
     return 0;
 }

@@ -9,9 +9,15 @@ public:
     COpenGLRender();
     virtual ~COpenGLRender();
 
-    virtual bool Init() override;
-    virtual bool Deinit() override;
+    virtual bool Init(IDevice* _device) override;
+    virtual void Deinit() override;
     virtual void Draw() override;
+
+private:
+#ifdef WIN32
+	bool	InitWin32(CWin32Device* _device);
+	HGLRC	m_RenderContext;
+#endif
 };
 
 #endif // COPENGLRENDER_H

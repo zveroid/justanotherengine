@@ -3,8 +3,16 @@
 
 class IRender
 {
-    virtual bool Init() = 0;
-    virtual bool Deinit() = 0;
+public:
+	enum RenderType
+	{
+		RT_OPENGL,
+		RT_DIRECTX9,
+		RT_DIRECTX11
+	};
+
+    virtual bool Init(IDevice* _device) = 0;
+    virtual void Deinit() = 0;
     virtual void Draw() = 0;
 };
 

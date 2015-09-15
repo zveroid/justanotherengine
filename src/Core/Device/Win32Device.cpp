@@ -3,6 +3,7 @@
 
 #include "Types.h"
 #include "Core/Device/Win32Device.h"
+#include "Core/Application.h"
 
 static u32 LocaleIdToCodepage(u32 lcid)
 {
@@ -165,7 +166,6 @@ static u32 LocaleIdToCodepage(u32 lcid)
 CWin32Device::CWin32Device() :
 	m_WindowHandler(0),
 	m_DeviceContext(0),
-	m_RenderContext(0),
 	m_Fullscreen(0),
 	m_KeyboardLayout(0),
 	m_KeyboardCodepage(0)
@@ -272,32 +272,9 @@ bool CWin32Device::Init()
 		0, 0, 0                                    // Layer Masks Ignored
 	};
 
-	GLuint PixelFormat = ChoosePixelFormat(m_DeviceContext, &pfd);
+	int PixelFormat = ChoosePixelFormat(m_DeviceContext, &pfd);
 
 	SetPixelFormat(m_DeviceContext, PixelFormat, &pfd);
-	m_RenderContext = wglCreateContext(m_DeviceContext);
-	if (!m_RenderContext)
-	{
-		ReleaseDC(m_WindowHandler, m_DeviceContext);
-		DestroyWindow(m_WindowHandler);
-		return false;
-	}
-
-	if (!wglMakeCurrent(m_DeviceContext, m_RenderContext))
-	{
-		wglDeleteContext(m_RenderContext);
-		ReleaseDC(m_WindowHandler, m_DeviceContext);
-		DestroyWindow(m_WindowHandler);
-		return false;
-	}
-
-	typedef BOOL(WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval);
-	PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
-	// vsync extension
-	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
-	// set vsync
-	if (wglSwapIntervalEXT)
-		wglSwapIntervalEXT(0);
 
 	// get the codepage used for keyboard input
 	m_KeyboardLayout = GetKeyboardLayout(0);
@@ -308,9 +285,16 @@ bool CWin32Device::Init()
 
 void CWin32Device::Deinit()
 {
-	wglDeleteContext(m_RenderContext);
-	ReleaseDC(m_WindowHandler, m_DeviceContext);
-	DestroyWindow(m_WindowHandler);
+	if (m_WindowHandler)
+	{
+		if (m_DeviceContext)
+		{
+			ReleaseDC(m_WindowHandler, m_DeviceContext);
+			m_DeviceContext = 0;
+		}
+		DestroyWindow(m_WindowHandler);
+		m_WindowHandler = 0;
+	}
 }
 
 void CWin32Device::Update()
@@ -318,15 +302,6 @@ void CWin32Device::Update()
 	MSG msg = { 0 };
 	if (GetMessage(&msg, m_WindowHandler, 0, 0) > 0)
 		DispatchMessage(&msg);
-}
-
-bool CWin32Device::CreateContext()
-{
-	return false;
-}
-
-void CWin32Device::ReleaseContext()
-{
 }
 
 LRESULT CWin32Device::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -337,7 +312,9 @@ LRESULT CWin32Device::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 	case WM_ACTIVATE:
 	case WM_DESTROY:
 	case WM_INPUT:
+		break;
 	case WM_CLOSE:
+		CApplication::GetInstance()->Quit();
 		break;
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);

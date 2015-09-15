@@ -13,12 +13,13 @@ public:
 	virtual bool Init() override;
 	virtual void Deinit() override;
 	virtual void Update() override;
+	HWND		 GetWindowHandler() { return m_WindowHandler; }
+	HDC			 GetDeviceContext() { return m_DeviceContext; }
 
 private:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	HWND	m_WindowHandler;
-	HGLRC	m_RenderContext;
 	HDC		m_DeviceContext;
 
 	bool	m_Fullscreen;
