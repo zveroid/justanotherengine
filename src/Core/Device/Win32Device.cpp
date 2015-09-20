@@ -1,7 +1,8 @@
+#include "stdafx.h"
+
 #include <Windows.h>
 #include <gl/GL.h>
 
-#include "Types.h"
 #include "Core/Device/Win32Device.h"
 #include "Core/Application.h"
 
@@ -163,159 +164,164 @@ static u32 LocaleIdToCodepage(u32 lcid)
 	return 65001;   // utf-8
 }
 
-CWin32Device::CWin32Device() :
-	m_WindowHandler(0),
-	m_DeviceContext(0),
-	m_Fullscreen(0),
-	m_KeyboardLayout(0),
-	m_KeyboardCodepage(0)
+namespace jaengine
 {
-}
 
-
-CWin32Device::~CWin32Device()
-{
-}
-
-bool CWin32Device::Init()
-{
-	HINSTANCE hInstance = GetModuleHandle(0);
-
-	if (!m_WindowHandler)
+	CWin32Device::CWin32Device() :
+		m_WindowHandler(0),
+		m_DeviceContext(0),
+		m_Fullscreen(0),
+		m_KeyboardLayout(0),
+		m_KeyboardCodepage(0)
 	{
-		WNDCLASSEX wcex;
-		wcex.cbSize = sizeof(WNDCLASSEX);
-		wcex.style = CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc = WndProc;
-		wcex.cbClsExtra = 0;
-		wcex.cbWndExtra = 0;
-		wcex.hInstance = hInstance;
-		wcex.hIcon = (HICON)LoadIcon(hInstance, MAKEINTRESOURCE(110));;
-		wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-		wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-		wcex.lpszMenuName = 0;
-		wcex.lpszClassName = "JAEngineWin32Class";
-		wcex.hIconSm = (HICON)LoadImage(hInstance, MAKEINTRESOURCE(110), IMAGE_ICON, 32, 32, 0);
+	}
 
-		if (!RegisterClassEx(&wcex))
-			return false;
 
-		RECT clientSize;
-		clientSize.top = 0;
-		clientSize.left = 0;
-		clientSize.right = m_Width;
-		clientSize.bottom = m_Height;
+	CWin32Device::~CWin32Device()
+	{
+	}
 
-		DWORD style = WS_POPUP;
-
-		if (!m_Fullscreen)
-			style = WS_SYSMENU | WS_BORDER | WS_CAPTION | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
-
-		AdjustWindowRect(&clientSize, style, FALSE);
-
-		const s32 realWidth = clientSize.right - clientSize.left;
-		const s32 realHeight = clientSize.bottom - clientSize.top;
-
-		s32 windowLeft = (GetSystemMetrics(SM_CXSCREEN) - realWidth) / 2;
-		s32 windowTop = (GetSystemMetrics(SM_CYSCREEN) - realHeight) / 2;
-
-		if (windowLeft < 0)
-			windowLeft = 0;
-		if (windowTop < 0)
-			windowTop = 0;    // make sure window menus are in screen on creation
-
-		if (m_Fullscreen)
-		{
-			windowLeft = 0;
-			windowTop = 0;
-		}
-
-		m_WindowHandler = CreateWindow(wcex.lpszClassName, "JustAnotherEngine", style, windowLeft, windowTop, realWidth, realHeight, NULL, NULL, hInstance, NULL);
+	bool CWin32Device::Init()
+	{
+		HINSTANCE hInstance = GetModuleHandle(0);
 
 		if (!m_WindowHandler)
-			return false;
-
-		ShowWindow(m_WindowHandler, SW_SHOW);
-		UpdateWindow(m_WindowHandler);
-
-		// fix ugly ATI driver bugs. Thanks to ariaci
-		MoveWindow(m_WindowHandler, windowLeft, windowTop, realWidth, realHeight, TRUE);
-
-		// make sure everything gets updated to the real sizes
-		//Resized = true;
-	}
-
-	SetActiveWindow(m_WindowHandler);
-	SetForegroundWindow(m_WindowHandler);
-
-	m_DeviceContext = GetDC(m_WindowHandler);
-
-	PIXELFORMATDESCRIPTOR pfd =
-	{
-		sizeof(PIXELFORMATDESCRIPTOR),             // Size Of This Pixel Format Descriptor
-		1,                                         // Version Number
-		PFD_DRAW_TO_WINDOW |                       // Format Must Support Window
-		PFD_SUPPORT_OPENGL |                       // Format Must Support OpenGL
-		PFD_DOUBLEBUFFER,			               // Must Support Double Buffering
-		PFD_TYPE_RGBA,                             // Request An RGBA Format
-		32,								            // Select Our Color Depth
-		0, 0, 0, 0, 0, 0,                          // Color Bits Ignored
-		0,                                         // No Alpha Buffer
-		0,                                         // Shift Bit Ignored
-		0,                                         // No Accumulation Buffer
-		0, 0, 0, 0,                                   // Accumulation Bits Ignored
-		0,		                                  // Z-Buffer (Depth Buffer)
-		0,					                      // Stencil Buffer Depth
-		0,                                         // No Auxiliary Buffer
-		0,//PFD_MAIN_PLANE,                            // Main Drawing Layer
-		0,                                         // Reserved
-		0, 0, 0                                    // Layer Masks Ignored
-	};
-
-	int PixelFormat = ChoosePixelFormat(m_DeviceContext, &pfd);
-
-	SetPixelFormat(m_DeviceContext, PixelFormat, &pfd);
-
-	// get the codepage used for keyboard input
-	m_KeyboardLayout = GetKeyboardLayout(0);
-	m_KeyboardCodepage = LocaleIdToCodepage(LOWORD(m_KeyboardLayout));
-
-	return true;
-}
-
-void CWin32Device::Deinit()
-{
-	if (m_WindowHandler)
-	{
-		if (m_DeviceContext)
 		{
-			ReleaseDC(m_WindowHandler, m_DeviceContext);
-			m_DeviceContext = 0;
+			WNDCLASSEX wcex;
+			wcex.cbSize = sizeof(WNDCLASSEX);
+			wcex.style = CS_HREDRAW | CS_VREDRAW;
+			wcex.lpfnWndProc = WndProc;
+			wcex.cbClsExtra = 0;
+			wcex.cbWndExtra = 0;
+			wcex.hInstance = hInstance;
+			wcex.hIcon = (HICON)LoadIcon(hInstance, MAKEINTRESOURCE(110));;
+			wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+			wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+			wcex.lpszMenuName = 0;
+			wcex.lpszClassName = "JAEngineWin32Class";
+			wcex.hIconSm = (HICON)LoadImage(hInstance, MAKEINTRESOURCE(110), IMAGE_ICON, 32, 32, 0);
+
+			if (!RegisterClassEx(&wcex))
+				return false;
+
+			RECT clientSize;
+			clientSize.top = 0;
+			clientSize.left = 0;
+			clientSize.right = m_Width;
+			clientSize.bottom = m_Height;
+
+			DWORD style = WS_POPUP;
+
+			if (!m_Fullscreen)
+				style = WS_SYSMENU | WS_BORDER | WS_CAPTION | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
+
+			AdjustWindowRect(&clientSize, style, FALSE);
+
+			const s32 realWidth = clientSize.right - clientSize.left;
+			const s32 realHeight = clientSize.bottom - clientSize.top;
+
+			s32 windowLeft = (GetSystemMetrics(SM_CXSCREEN) - realWidth) / 2;
+			s32 windowTop = (GetSystemMetrics(SM_CYSCREEN) - realHeight) / 2;
+
+			if (windowLeft < 0)
+				windowLeft = 0;
+			if (windowTop < 0)
+				windowTop = 0;    // make sure window menus are in screen on creation
+
+			if (m_Fullscreen)
+			{
+				windowLeft = 0;
+				windowTop = 0;
+			}
+
+			m_WindowHandler = CreateWindow(wcex.lpszClassName, "JustAnotherEngine", style, windowLeft, windowTop, realWidth, realHeight, NULL, NULL, hInstance, NULL);
+
+			if (!m_WindowHandler)
+				return false;
+
+			ShowWindow(m_WindowHandler, SW_SHOW);
+			UpdateWindow(m_WindowHandler);
+
+			// fix ugly ATI driver bugs. Thanks to ariaci
+			MoveWindow(m_WindowHandler, windowLeft, windowTop, realWidth, realHeight, TRUE);
+
+			// make sure everything gets updated to the real sizes
+			//Resized = true;
 		}
-		DestroyWindow(m_WindowHandler);
-		m_WindowHandler = 0;
+
+		SetActiveWindow(m_WindowHandler);
+		SetForegroundWindow(m_WindowHandler);
+
+		m_DeviceContext = GetDC(m_WindowHandler);
+
+		PIXELFORMATDESCRIPTOR pfd =
+		{
+			sizeof(PIXELFORMATDESCRIPTOR),             // Size Of This Pixel Format Descriptor
+			1,                                         // Version Number
+			PFD_DRAW_TO_WINDOW |                       // Format Must Support Window
+			PFD_SUPPORT_OPENGL |                       // Format Must Support OpenGL
+			PFD_DOUBLEBUFFER,			               // Must Support Double Buffering
+			PFD_TYPE_RGBA,                             // Request An RGBA Format
+			32,								            // Select Our Color Depth
+			0, 0, 0, 0, 0, 0,                          // Color Bits Ignored
+			0,                                         // No Alpha Buffer
+			0,                                         // Shift Bit Ignored
+			0,                                         // No Accumulation Buffer
+			0, 0, 0, 0,                                   // Accumulation Bits Ignored
+			0,		                                  // Z-Buffer (Depth Buffer)
+			0,					                      // Stencil Buffer Depth
+			0,                                         // No Auxiliary Buffer
+			0,//PFD_MAIN_PLANE,                            // Main Drawing Layer
+			0,                                         // Reserved
+			0, 0, 0                                    // Layer Masks Ignored
+		};
+
+		int PixelFormat = ChoosePixelFormat(m_DeviceContext, &pfd);
+
+		SetPixelFormat(m_DeviceContext, PixelFormat, &pfd);
+
+		// get the codepage used for keyboard input
+		m_KeyboardLayout = GetKeyboardLayout(0);
+		m_KeyboardCodepage = LocaleIdToCodepage(LOWORD(m_KeyboardLayout));
+
+		return true;
 	}
-}
 
-void CWin32Device::Update()
-{
-	MSG msg = { 0 };
-	if (GetMessage(&msg, m_WindowHandler, 0, 0) > 0)
-		DispatchMessage(&msg);
-}
-
-LRESULT CWin32Device::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
+	void CWin32Device::Deinit()
 	{
-	case WM_CREATE:
-	case WM_ACTIVATE:
-	case WM_DESTROY:
-	case WM_INPUT:
-		break;
-	case WM_CLOSE:
-		CApplication::GetInstance()->Quit();
-		break;
+		if (m_WindowHandler)
+		{
+			if (m_DeviceContext)
+			{
+				ReleaseDC(m_WindowHandler, m_DeviceContext);
+				m_DeviceContext = 0;
+			}
+			DestroyWindow(m_WindowHandler);
+			m_WindowHandler = 0;
+		}
 	}
-	return DefWindowProc(hWnd, message, wParam, lParam);
+
+	void CWin32Device::Update()
+	{
+		MSG msg = { 0 };
+		if (GetMessage(&msg, m_WindowHandler, 0, 0) > 0)
+			DispatchMessage(&msg);
+	}
+
+	LRESULT CWin32Device::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+	{
+		switch (message)
+		{
+		case WM_CREATE:
+		case WM_ACTIVATE:
+		case WM_DESTROY:
+		case WM_INPUT:
+			break;
+		case WM_CLOSE:
+			CApplication::GetInstance()->Quit();
+			break;
+		}
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+
 }

@@ -1,12 +1,13 @@
 #include <iostream>
 #include <Windows.h>
 
-#include "Types.h"
+#include "stdafx.h"
 
 #include "Core/Device/Device.h"
 #include "Core/Application.h"
 
 using namespace std;
+using namespace jaengine;
 
 int main()
 {

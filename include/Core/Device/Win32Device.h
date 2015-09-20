@@ -3,31 +3,36 @@
 
 #include "Core/Device/Device.h"
 
-class CWin32Device :
-	public IDevice
+namespace jaengine
 {
-public:
-	CWin32Device();
-	virtual ~CWin32Device();
 
-	virtual bool Init() override;
-	virtual void Deinit() override;
-	virtual void Update() override;
-	HWND		 GetWindowHandler() { return m_WindowHandler; }
-	HDC			 GetDeviceContext() { return m_DeviceContext; }
+	class CWin32Device :
+		public IDevice
+	{
+	public:
+		CWin32Device();
+		virtual ~CWin32Device();
 
-private:
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+		virtual bool Init() override;
+		virtual void Deinit() override;
+		virtual void Update() override;
+		HWND		 GetWindowHandler() { return m_WindowHandler; }
+		HDC			 GetDeviceContext() { return m_DeviceContext; }
 
-	HWND	m_WindowHandler;
-	HDC		m_DeviceContext;
+	private:
+		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-	bool	m_Fullscreen;
+		HWND	m_WindowHandler;
+		HDC		m_DeviceContext;
 
-	HKL		m_KeyboardLayout;
-	u32		m_KeyboardCodepage;
-};
+		bool	m_Fullscreen;
 
-using OSDevice = CWin32Device;
+		HKL		m_KeyboardLayout;
+		u32		m_KeyboardCodepage;
+	};
+
+	using OSDevice = CWin32Device;
+
+}
 
 #endif //WIN32DEVICE_H

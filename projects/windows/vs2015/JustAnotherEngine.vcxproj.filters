@@ -16,20 +16,32 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{f9ba62ee-e42c-4657-ab5a-0bc5d440ea2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core\Render">
-      <UniqueIdentifier>{14d2a19d-a1e0-4eb2-877d-b65fa50691db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Core">
       <UniqueIdentifier>{a52fcf2f-c891-4785-9db9-18b2418aa1e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Core\Render">
-      <UniqueIdentifier>{e5e86587-67c0-4096-9a16-712a37350030}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Core\Device">
       <UniqueIdentifier>{2cc030e3-cf76-4201-830b-521396fbb42a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Core\Device">
       <UniqueIdentifier>{87522574-0ac4-4f38-ae29-c024f4226659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{ed3e5eb7-1fca-4268-992a-fdd613881c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{ac25ee5f-8d52-459c-a9f0-a1794b70fb52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Render">
+      <UniqueIdentifier>{14d2a19d-a1e0-4eb2-877d-b65fa50691db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Render">
+      <UniqueIdentifier>{e5e86587-67c0-4096-9a16-712a37350030}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Render\OpenGL">
+      <UniqueIdentifier>{a7ef3908-e3ca-4d7a-ac47-c58fd386f8a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Render\OpenGL">
+      <UniqueIdentifier>{42e79130-3ff7-49d5-84f4-a5335966270f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,8 +54,14 @@
     <ClCompile Include="..\..\..\src\Core\Application.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Core\Render\OpenGLRender.cpp">
-      <Filter>Source Files\Core\Render</Filter>
+    <ClCompile Include="..\..\..\src\Graphics\VertexBuffer.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLRender.cpp">
+      <Filter>Source Files\Graphics\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLVertexBuffer.cpp">
+      <Filter>Source Files\Graphics\Render\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,17 +71,26 @@
     <ClInclude Include="..\..\..\include\Core\Device\Device.h">
       <Filter>Header Files\Core\Device</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\Core\Render\OpenGLRender.h">
-      <Filter>Header Files\Core\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\Core\Render\Render.h">
-      <Filter>Header Files\Core\Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\Core\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Types.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\VertexBuffer.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\Render\Render.h">
+      <Filter>Header Files\Graphics\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\Render\OpenGL\OpenGLRender.h">
+      <Filter>Header Files\Graphics\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\Render\OpenGL\OpenGLVertexBuffer.h">
+      <Filter>Header Files\Graphics\Render\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

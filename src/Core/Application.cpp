@@ -1,71 +1,78 @@
-#include "Types.h"
+#include "stdafx.h"
+
 #include "Core/Device/Device.h"
 #ifdef WIN32
 #include <Windows.h>
 #include "Core/Device/Win32Device.h"
 #endif
-#include "Core/Render/Render.h"
-#include "Core/Render/OpenGLRender.h"
+#include "Graphics/Render/Render.h"
+#include "Graphics/Render/OpenGL/OpenGLRender.h"
+
 #include "Core/Application.h"
 
-CApplication* CApplication::m_Instance = 0;
-
-CApplication::CApplication() : 
-	m_Device(new OSDevice)
-	, m_Render(0)
-	, m_RenderType(IRender::RT_OPENGL)
-	, m_State(AS_NONE)
+namespace jaengine
 {
-	m_Instance = this;
-}
 
-CApplication::~CApplication()
-{
-	Deinit();
-	delete m_Render;
-	delete m_Device;
-}
+	CApplication* CApplication::m_Instance = 0;
 
-bool CApplication::Init()
-{
-	bool result = true;
-
-	result &= m_Device->Init();
-	if (!result)
-		return false;
-
-	switch (m_RenderType)
+	CApplication::CApplication() :
+		m_Device(new OSDevice)
+		, m_Render(0)
+		, m_RenderType(IRender::RT_OPENGL)
+		, m_State(AS_NONE)
 	{
-	case IRender::RT_OPENGL:
-		m_Render = new COpenGLRender;
-		break;
-	default:
-		return false;
+		m_Instance = this;
 	}
-	result &= m_Render->Init(m_Device);
 
-	m_State = result ? AS_RUNNING : AS_NONE;
-
-	return result;
-}
-
-void CApplication::Deinit()
-{
-	if (m_Render)
+	CApplication::~CApplication()
 	{
-		m_Render->Deinit();
+		Deinit();
+		delete m_Render;
+		delete m_Device;
 	}
-	if (m_Device)
+
+	bool CApplication::Init()
 	{
-		m_Device->Deinit();
+		bool result = true;
+
+		result &= m_Device->Init();
+		if (!result)
+			return false;
+
+		switch (m_RenderType)
+		{
+		case IRender::RT_OPENGL:
+			m_Render = new COpenGLRender;
+			break;
+		default:
+			return false;
+		}
+		result &= m_Render->Init(m_Device);
+
+		m_State = result ? AS_RUNNING : AS_NONE;
+
+		return result;
 	}
-}
 
-void CApplication::Update()
-{
-	if (!IsRunning())
-		return;
+	void CApplication::Deinit()
+	{
+		if (m_Render)
+		{
+			m_Render->Deinit();
+		}
+		if (m_Device)
+		{
+			m_Device->Deinit();
+		}
+	}
 
-	m_Device->Update();
-	m_Render->Draw();
+	void CApplication::Update()
+	{
+		if (!IsRunning())
+			return;
+
+		m_Device->Update();
+		m_Render->Draw();
+	}
+
 }
