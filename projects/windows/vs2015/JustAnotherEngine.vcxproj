@@ -140,18 +140,20 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\Core\Device\Win32Device.cpp" />
     <ClCompile Include="..\..\..\src\Core\Application.cpp" />
+    <ClCompile Include="..\..\..\src\Graphics\Mesh.cpp" />
     <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLRender.cpp" />
     <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLVertexBuffer.cpp" />
-    <ClCompile Include="..\..\..\src\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\Core\Application.h" />
     <ClInclude Include="..\..\..\include\Core\Device\Device.h" />
     <ClInclude Include="..\..\..\include\Core\Device\Win32Device.h" />
+    <ClInclude Include="..\..\..\include\Graphics\Mesh.h" />
     <ClInclude Include="..\..\..\include\Graphics\Render\OpenGL\OpenGLRender.h" />
     <ClInclude Include="..\..\..\include\Graphics\Render\OpenGL\OpenGLVertexBuffer.h" />
     <ClInclude Include="..\..\..\include\Graphics\Render\Render.h" />
+    <ClInclude Include="..\..\..\include\Graphics\SceneNode.h" />
     <ClInclude Include="..\..\..\include\Graphics\VertexBuffer.h" />
     <ClInclude Include="..\..\..\include\stdafx.h" />
     <ClInclude Include="..\..\..\include\Types.h" />

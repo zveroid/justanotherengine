@@ -7,7 +7,7 @@ namespace jaengine
 {
 
 	class COpenGLVertexBuffer :
-		public CVertexBuffer
+		public IVertexBuffer
 	{
 	public:
 		COpenGLVertexBuffer();

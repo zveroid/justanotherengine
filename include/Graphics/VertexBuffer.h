@@ -4,7 +4,7 @@
 namespace jaengine
 {
 
-	class CVertexBuffer
+	class IVertexBuffer
 	{
 	public:
 		enum VertexBufferDataType
@@ -12,8 +12,7 @@ namespace jaengine
 			VBDT_VERTICES = 0,
 		};
 
-		CVertexBuffer();
-		virtual ~CVertexBuffer();
+		virtual ~IVertexBuffer() {};
 
 		u32	GetHandle() { return m_Handle; }
 

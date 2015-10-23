@@ -5,12 +5,12 @@
 namespace jaengine
 {
 
-	CVertexBuffer::CVertexBuffer()
+	IVertexBuffer::IVertexBuffer()
 	{
 	}
 
 
-	CVertexBuffer::~CVertexBuffer()
+	IVertexBuffer::~IVertexBuffer()
 	{
 	}
 

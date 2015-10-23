@@ -54,14 +54,14 @@
     <ClCompile Include="..\..\..\src\Core\Application.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Graphics\VertexBuffer.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLRender.cpp">
       <Filter>Source Files\Graphics\Render\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Graphics\Render\OpenGL\OpenGLVertexBuffer.cpp">
       <Filter>Source Files\Graphics\Render\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Graphics\Mesh.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\Graphics\Render\OpenGL\OpenGLVertexBuffer.h">
       <Filter>Header Files\Graphics\Render\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\Mesh.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Graphics\SceneNode.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
